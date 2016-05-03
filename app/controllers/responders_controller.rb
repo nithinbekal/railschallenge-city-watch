@@ -7,6 +7,10 @@ class RespondersController < ApplicationController
     render json: { message: 'not found' }, status: :not_found
   end
 
+  def index
+    @responders = Responder.all
+  end
+
   def show
     @responder = Responder.find_by!(name: params[:id])
     render :show, status: :ok
