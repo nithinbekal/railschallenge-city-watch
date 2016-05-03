@@ -13,7 +13,7 @@ class RespondersController < ApplicationController
   end
 
   def create
-    @responder = Responder.new(responder_params)
+    @responder = Responder.new(create_params)
     if @responder.save
       render :show, status: :created
     else
@@ -21,10 +21,22 @@ class RespondersController < ApplicationController
     end
   end
 
+  def update
+    @responder = Responder.find_by!(name: params[:id])
+    if @responder.update(update_params)
+      render :show
+    else
+      render json: { message: @responder.errors }, status: :unprocessable_entity
+    end
+  end
+
   private
 
-  def responder_params
-    params.require(:responder)
-      .permit(:type, :name, :capacity)
+  def create_params
+    params.require(:responder).permit(:type, :name, :capacity)
+  end
+
+  def update_params
+    params.require(:responder).permit(:on_duty)
   end
 end
