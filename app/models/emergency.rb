@@ -8,7 +8,7 @@ class Emergency < ActiveRecord::Base
   has_many :responders
 
   def full_response?
-    %w(Fire Medical Police).all? do |type|
+    Responder.types.all? do |type|
       capacity = responders.where(type: type).sum(:capacity)
       severity = attributes["#{type.downcase}_severity"]
       capacity >= severity

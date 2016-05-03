@@ -20,6 +20,7 @@ class EmergenciesController < ApplicationController
   def update
     @emergency = Emergency.find_by!(code: params[:id])
     if @emergency.update(update_params)
+      @emergency.responders.clear if @emergency.resolved_at
       render :show, status: :ok
     else
       render json: { message: @emergency.errors }, status: :unprocessable_entity
