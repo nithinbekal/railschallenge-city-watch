@@ -1,12 +1,4 @@
 class RespondersController < ApplicationController
-  rescue_from ActionController::UnpermittedParameters do |e|
-    render json: { message: e.message }, status: :unprocessable_entity
-  end
-
-  rescue_from ActiveRecord::RecordNotFound do |e|
-    render json: { message: 'not found' }, status: :not_found
-  end
-
   def index
     @responders = Responder.all
   end
